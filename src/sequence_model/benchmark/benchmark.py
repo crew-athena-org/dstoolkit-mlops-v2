@@ -11,7 +11,7 @@ from azureml.core.run import Run
 import src.sequence_model.common.mlflow_ext as mlflow
 
 logger = logging.getLogger(__name__)
-run_tags = {"model": "nanogpt", "step": "benchmark"}
+run_tags = {"model": "sequence_model", "step": "benchmark"}
 
 
 def parse_args() -> Namespace:

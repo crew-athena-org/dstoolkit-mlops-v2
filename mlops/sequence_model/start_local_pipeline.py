@@ -3,4 +3,4 @@
 from mlops.sequence_model.src import mlops_pipeline
 
 if __name__ == "__main__":
-    mlops_pipeline.prepare_and_execute("local", "ci", "True", None)
+    mlops_pipeline.prepare_and_execute("local", "dev", "True", None)

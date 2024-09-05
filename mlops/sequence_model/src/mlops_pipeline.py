@@ -32,7 +32,7 @@ from mlops.common.naming_utils import (
 )
 
 gl_pipeline_components = []
-benchmark_and_register: bool = False
+benchmark_and_register: bool = True
 force_registration: bool = False
 
 
@@ -350,7 +350,7 @@ def prepare_and_execute(
     )
     print(f"Environment: {environment.name}, version: {environment.version}")
     published_model_name = generate_model_name(model_name)
-    published_experiment_name = generate_experiment_name(model_name, build_environment)
+    published_experiment_name = generate_experiment_name(model_name)
     published_run_name = generate_run_name(
         config.environment_configuration["build_reference"]
     )
