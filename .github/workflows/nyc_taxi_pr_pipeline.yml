@@ -1,17 +1,7 @@
 name: Nyc Taxi PR Workflow
 
 on:
-  pull_request:
-    branches:
-      - development
-    paths:
-      - '.github/**'
-      - 'mlops/common/**'
-      - 'mlops/nyc_taxi/**'
-      - 'model/nyc_taxi/**'
-      - 'src/nyc_src/**'
-      - 'test/nyc_taxi/**'
-  workflow_call:
+  workflow_dispatch:
     inputs:
       exec_environment:
         type: string
