@@ -1,9 +1,8 @@
 """This module provides the functionality for initializing and running a machine learning model."""
+
 import os
 import logging
 import json
-import numpy
-import joblib
 import yaml
 from seq_model import NgramModel
 from tokenizer import Tokenizer
@@ -19,8 +18,15 @@ def init():
     global tokenizer
     global model_cfg
 
-    model_path = os.path.join(os.getenv("AZUREML_MODEL_DIR"), "model_registration", "model", "model_dict.pkl")
-    tokenizer_path = os.path.join(os.getenv("AZUREML_MODEL_DIR"), "model_registration", "tokenizer", "tokenizer.json")
+    model_path = os.path.join(
+        os.getenv("AZUREML_MODEL_DIR"), "model_registration", "model", "model_dict.pkl"
+    )
+    tokenizer_path = os.path.join(
+        os.getenv("AZUREML_MODEL_DIR"),
+        "model_registration",
+        "tokenizer",
+        "tokenizer.json",
+    )
     model_cfg_path = "model_config.yml"
 
     model_cfg = yaml.safe_load(open(model_cfg_path))
@@ -47,10 +53,11 @@ def run(raw_data):
     """
     logging.info("model 1: request received")
     data = json.loads(raw_data)["data"]
-    
-    assert(
-        len(data) <= model_cfg['max_prior_token_length']
-    ), f"Only {model_cfg['max_prior_token_length']} prior words can be used for next prediction but {len(data)} words exist in request."
+
+    assert (
+        len(data) <= model_cfg["max_prior_token_length"]
+    ), f"Only {model_cfg['max_prior_token_length']} prior words can \
+    be used for next prediction but {len(data)} words exist in request."
 
     # Encode data
     tokenized_data = tuple(tokenizer.enc(words=data))
@@ -61,5 +68,5 @@ def run(raw_data):
     preds = tokenizer.dec(tokens=result)
 
     logging.info("Request processed")
-    
+
     return preds

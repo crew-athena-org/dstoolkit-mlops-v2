@@ -1,12 +1,13 @@
 """This module provides the functionality for initializing and running a machine learning model."""
+
 import os
 import logging
-import joblib
 import pandas as pd
 from typing import List
 import yaml
 from seq_model import NgramModel
 from tokenizer import Tokenizer
+
 
 def init():
     """
@@ -18,8 +19,15 @@ def init():
     global tokenizer
     global model_cfg
 
-    model_path = os.path.join(os.getenv("AZUREML_MODEL_DIR"), "model_registration", "model", "model_dict.pkl")
-    tokenizer_path = os.path.join(os.getenv("AZUREML_MODEL_DIR"), "model_registration", "tokenizer", "tokenizer.json")
+    model_path = os.path.join(
+        os.getenv("AZUREML_MODEL_DIR"), "model_registration", "model", "model_dict.pkl"
+    )
+    tokenizer_path = os.path.join(
+        os.getenv("AZUREML_MODEL_DIR"),
+        "model_registration",
+        "tokenizer",
+        "tokenizer.json",
+    )
     model_cfg_path = "model_config.yml"
 
     model_cfg = yaml.safe_load(open(model_cfg_path))
@@ -50,14 +58,14 @@ def run(mini_batch: List[str]) -> pd.DataFrame:
 
     for raw_data in mini_batch:
         print(f"File name: {raw_data}")
-        with open("sequence_model.csv",'r') as f:
+        with open("sequence_model.csv", "r") as f:
             for line in f:
-                data = tuple(line.strip().split(' '))
-                tokenized_data = tokenizer.enc(words=data) 
+                data = tuple(line.strip().split(" "))
+                tokenized_data = tokenizer.enc(words=data)
                 result = model.predict(tokenized_data)
                 preds = tokenizer.dec(result)
-                print('Input data:', line.strip())
-                print('Possible choices for next word:', preds)
+                print("Input data:", line.strip())
+                print("Possible choices for next word:", preds)
 
         print("Item has been proccessed")
 

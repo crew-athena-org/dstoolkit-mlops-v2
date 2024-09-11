@@ -1,3 +1,8 @@
+"""
+This module is designed for model benchmarking.
+
+It is intended to be expanded upon and customized for future models.
+"""
 import json
 import logging
 import logging.config

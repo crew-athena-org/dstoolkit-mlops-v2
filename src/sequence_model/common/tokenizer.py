@@ -1,11 +1,8 @@
 """Learns a tokenizer from a training corpus. Tokenizes data accordingly."""
 
 import json
-import re
 from io import open
 from pathlib import Path
-import json
-from tqdm import tqdm
 
 
 class Tokenizer(object):

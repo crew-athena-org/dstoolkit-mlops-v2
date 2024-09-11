@@ -12,13 +12,11 @@ and generating reports.
 """
 
 import argparse
-import datetime
 import os
-import pathlib
 import time
 
 import mlflow
-from azure.ai.ml import Input, MLClient, Output, load_component
+from azure.ai.ml import Input, MLClient, load_component
 from azure.ai.ml.dsl import pipeline
 from azure.identity import DefaultAzureCredential
 
@@ -52,19 +50,6 @@ def sequence_model_pipeline(
     Returns:
     dict: A dictionary containing paths to various data, the model, predictions, and score report.
     """
-    currentTime = datetime.datetime.now().strftime(
-        "%Y-%m-%d_%H_%M_%S"
-    )  # Gets current time
-    basePath = "azureml://datastores/${{default_datastore}}/paths"  # Base path for where the model output where be store
-    path = f"{basePath}/sequence_model/{currentTime}/artifacts/registration"  # Full path for where the model where be stored
-
-    # This is done so the same output can be used across jobs?
-    artifacts_folder_output = Output(
-        type="uri_folder",
-        mode="rw_mount",
-        path=path,
-    )
-
     train_model_cmp = gl_pipeline_components[0](
         dataset_folder=pipeline_job_input,
     )

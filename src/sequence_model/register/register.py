@@ -6,7 +6,6 @@ import logging
 import pathlib
 import shutil
 import yaml
-from azureml.core.model import Model
 from azureml.core.run import Run
 
 import src.sequence_model.common.mlflow_ext as mlflow
@@ -64,6 +63,20 @@ def parse_args():
 
 
 def assemble_outputs(args):
+    """
+    Assemble and organize output artifacts for model registration.
+
+    This function creates necessary directories and copies various files into a single folder structure
+    for easier model registration. It consolidates predictions, model artifacts, score reports, and benchmark
+    reports into designated folders.
+
+    Parameters:
+    args (argparse.Namespace): Command-line arguments containing paths to the predictions folder, model artifacts,
+                               score report folder, and benchmark report folder.
+
+    Returns:
+    tuple: A tuple containing the paths to the artifacts folder and the model registration folder.
+    """
     artifacts_folder = pathlib.Path("artifacts/")
     pathlib.Path(artifacts_folder).mkdir(exist_ok=True)
     model_registration_folder = pathlib.Path(artifacts_folder, "model_registration/")
@@ -101,7 +114,7 @@ def register(args, model_name: str):  # #model_folder: str, score_report_path: s
     run.register_model(
         model_path="artifacts/model_registration",
         model_name=model_name,
-        description="A next token prediction model for Shakespearean works using the prior n-grams to infer the next word.",
+        description="A next token prediction model using the prior n-grams to infer the next word.",
     )
 
     logger.info(

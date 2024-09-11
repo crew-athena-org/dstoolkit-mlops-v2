@@ -1,12 +1,48 @@
+"""
+Sequence Model Prediction Module.
+
+This module is used to predict the next tokens in a sequence using a trained n-gram model.
+It loads the model and tokenizer, tokenizes the test data, and makes predictions based on
+the provided prior tokens. The predictions are saved to a specified
+output folder.
+
+Imports:
+    - argparse: For parsing command-line arguments.
+    - logging: For logging information.
+    - pickle: For loading and saving data.
+    - pathlib: For handling file paths.
+    - numpy: For numerical operations.
+    - tqdm: For displaying progress bars.
+    - yaml: For loading configuration files.
+    - Tokenizer: For tokenizing the input data.
+    - NgramModel: For the n-gram model.
+    - mlflow: For managing MLflow runs.
+
+Attributes:
+    logger (logging.Logger): Logger for the module.
+    run_tags (dict): Tags for the MLflow run.
+    current_run_id (str): Current MLflow run ID.
+    parent_run_id (str): Parent MLflow run ID.
+
+Command-line Arguments:
+    --dataset_folder (str): Path hosting test data.
+    --model_artifacts (str): Path to model artifacts from the training step.
+    --predictions_folder (str): Path to save the serialized set of model predictions on test data.
+    --model_config (str): Path to the model configuration file.
+
+Example:
+    To run the module, use the following command:
+    python -m src.sequence_model.predict.predict --dataset_folder <path_to_test_data> --model_artifacts
+    <path_to_model_artifacts> --predictions_folder <path_to_save_predictions>
+    --model_config <path_to_model_config>
+"""
 import argparse
-import json
 import logging
 import pickle
 import pathlib
 import numpy as np
 from tqdm import tqdm
 import yaml
-import os
 from src.sequence_model.common.tokenizer import Tokenizer
 from src.sequence_model.common.seq_model import NgramModel
 import src.sequence_model.common.mlflow_ext as mlflow
@@ -134,7 +170,7 @@ if __name__ == "__main__":
         # Get current ngram
         cur_ngram = tuple(
             tokenized_data[
-                ngram_index : ngram_index + model_cfg["max_prior_token_length"]
+                ngram_index: ngram_index + model_cfg["max_prior_token_length"]
             ]
         )
 
@@ -147,7 +183,7 @@ if __name__ == "__main__":
             cur_pred = cur_pred + [-1] * (model_cfg["max_top_n"] - len(cur_pred))
         # Write pred to array
         preds[
-            1 : model_cfg["max_top_n"] + 1,
+            1: model_cfg["max_top_n"] + 1,
             ngram_index + model_cfg["max_prior_token_length"],
         ] = cur_pred
 

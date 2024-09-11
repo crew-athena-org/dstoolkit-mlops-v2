@@ -1,3 +1,38 @@
+"""
+Sequence Model Training Module.
+
+This module is used to train a sequence model using an n-gram approach. It loads
+the training data, trains a tokenizer, tokenizes the data, trains the n-gram model,
+and saves the trained model and tokenizer to specified output paths.
+
+Imports:
+    - argparse: For parsing command-line arguments.
+    - json: For loading and saving JSON data.
+    - logging: For logging information.
+    - pickle: For loading and saving data.
+    - pathlib: For handling file paths.
+    - os: For interacting with the operating system.
+    - yaml: For loading configuration files.
+    - Tokenizer: For tokenizing the input data.
+    - NgramModel: For the n-gram model.
+    - mlflow: For managing MLflow runs.
+
+Attributes:
+    logger (logging.Logger): Logger for the module.
+    run_tags (dict): Tags for the MLflow run.
+    current_run_id (str): Current MLflow run ID.
+    parent_run_id (str): Parent MLflow run ID.
+
+Command-line Arguments:
+    --dataset_folder (str): Path to the folder containing the training data.
+    --model_artifacts (str): Path to host serialized model components.
+    --model_config (str): Path to the model configuration file.
+
+Example:
+    To run the module, use the following command:
+    python -m src.sequence_model.train.train --dataset_folder <path_to_train_data> --model_artifacts
+    <path_to_save_model_artifacts> --model_config <path_to_model_config>
+"""
 import argparse
 import json
 import logging

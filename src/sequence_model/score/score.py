@@ -1,3 +1,35 @@
+"""
+Sequence Model Scoring Module.
+
+This module is used to score the predictions made by a trained n-gram model. It loads the model configuration,
+predictions, and computes the accuracy of the predictions. The results are saved to a specified output folder.
+
+Imports:
+    - argparse: For parsing command-line arguments.
+    - pathlib: For handling file paths.
+    - json: For loading and saving JSON data.
+    - logging: For logging information.
+    - numpy: For numerical operations.
+    - tqdm: For displaying progress bars.
+    - yaml: For loading configuration files.
+    - mlflow: For managing MLflow runs.
+
+Attributes:
+    logger (logging.Logger): Logger for the module.
+    run_tags (dict): Tags for the MLflow run.
+    current_run_id (str): Current MLflow run ID.
+    parent_run_id (str): Parent MLflow run ID.
+
+Command-line Arguments:
+    --predictions_folder (str): Path to output artifacts from the predict step.
+    --score_report_folder (str): Path to save the score report of the model's predictions on test data.
+    --model_config (str): Path to the model configuration file.
+
+Example:
+    To run the module, use the following command:
+    python -m src.sequence_model.score.score --predictions_folder <path_to_predictions>
+    --score_report_folder <path_to_save_score_report> --model_config <path_to_model_config>
+"""
 import argparse
 import pathlib
 import json
@@ -67,7 +99,8 @@ if __name__ == "__main__":
 
     assert (
         num_preds <= model_cfg["max_top_n"]
-    ), f"Only {model_cfg['max_top_n']} predictions exist in file but {num_preds} requested to be used to compute accuracy."
+    ), f"Only {model_cfg['max_top_n']} predictions exist in file but {num_preds}" \
+        "requested to be used to compute accuracy."
 
     # I/O
     score_report_root = pathlib.Path(args.score_report_folder)
