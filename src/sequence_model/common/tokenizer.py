@@ -16,7 +16,7 @@ class Tokenizer(object):
         self.i_to_words = {}
         self.vocab_size = None
 
-    def load(path: str) -> "Tokenizer":
+    def load(self, path: str) -> "Tokenizer":
         """
         Load the tokenizer information to know how to tokenize the dataset.
 
@@ -45,9 +45,9 @@ class Tokenizer(object):
             "words_to_i": self.words_to_i,
             "i_to_words": self.i_to_words,
         }
-        jsonFile = Path(save_path)
+        jsonfile = Path(save_path)
 
-        with open(jsonFile, "w", encoding="utf-8") as f:
+        with open(jsonfile, "w", encoding="utf-8") as f:
             json.dump(t, f, ensure_ascii=False, indent=4)
 
     def train(self, corpus, save_path: str = ""):
