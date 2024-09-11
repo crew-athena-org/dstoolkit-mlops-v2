@@ -1,6 +1,7 @@
 name: Sequence Model PR Workflow
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - development
