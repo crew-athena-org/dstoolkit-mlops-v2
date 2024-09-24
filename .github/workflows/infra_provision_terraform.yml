@@ -11,6 +11,16 @@ on:
         options:
           - "public_workspace"
           - "secure_workspace"
+      environment:
+        type: choice
+        description: "Infrastructure Environment"
+        required: false
+        default: "dev"
+        options:
+          - ""
+          - "dev"
+          - "test"
+          - "prod"
 
 env:
   APPINSIGHTS_NAME: ${{ vars.APPINSIGHTS_NAME }}
@@ -26,6 +36,7 @@ env:
   ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
   ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
   SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
+  ENVIRONMENT: ${{ inputs.environment }}
 
 jobs:
   run-infra-provision:
@@ -64,6 +75,7 @@ jobs:
           echo '${{ env.ARM_CLIENT_ID }}'
           echo '${{ env.ARM_TENANT_ID }}'
           echo '${{ inputs.infra_workspace }}'
+          echo '${{ env.ENVIRONMENT }}'
 
       - uses: cschleiden/replace-tokens@v1
         with:
