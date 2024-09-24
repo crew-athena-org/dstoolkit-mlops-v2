@@ -120,6 +120,13 @@ jobs:
       - run: |
           az storage container create --name terraform --account-name '${{ env.TFSTATE_STORAGE_ACCT_NAME }}'
 
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ inputs.arm_client_id }}
+          tenant-id: ${{ inputs.arm_tenant_id }}
+          subscription-id: ${{ inputs.subscription_id }}
+
       - name: Terraform Install
         uses: hashicorp/setup-terraform@v1
         with:
@@ -129,10 +136,10 @@ jobs:
         run: ls ${{ github.workspace }}
 
       - name: Terraform Init
-        # env:
-        #   ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
-        #   ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
-        #   ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}  
+        env:
+          ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
+          ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}  
         if: true
         run: |
           terraform init \
