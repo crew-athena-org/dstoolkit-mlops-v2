@@ -1,5 +1,16 @@
 name: ModelFactory-Terraform-Deployment
+
 on: [workflow_dispatch]
+  # workflow_dispatch:
+    # inputs:
+    #   infra_workspace:
+    #     type: choice
+    #     description: "The workspace to deploy"
+    #     required: true
+    #     default: "secure_workspace"
+    #     options:
+    #       - "public_workspace"
+    #       - "secure_workspace"
 
 env:
   APPINSIGHTS_NAME: ${{ vars.APPINSIGHTS_NAME }}
@@ -17,7 +28,7 @@ env:
   SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
 
 jobs:
-  terraform:
+  run-infra-provision:
     runs-on: ubuntu-latest
     permissions:
       id-token: write

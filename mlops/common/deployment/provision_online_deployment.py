@@ -70,6 +70,7 @@ def main():
         ),
         instance_type=deployment_config["deployment_vm_size"],
         instance_count=deployment_config["deployment_instance_count"],
+        egress_public_network_access="disabled",
         tags={
             "build_id": config.environment_configuration["build_reference"],
             "run_id": run_id,
