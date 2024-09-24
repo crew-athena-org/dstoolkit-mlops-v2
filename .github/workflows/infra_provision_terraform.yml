@@ -120,13 +120,6 @@ jobs:
       - run: |
           az storage container create --name terraform --account-name '${{ env.TFSTATE_STORAGE_ACCT_NAME }}'
 
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ inputs.arm_client_id }}
-          tenant-id: ${{ inputs.arm_tenant_id }}
-          subscription-id: ${{ inputs.subscription_id }}
-
       - name: Terraform Install
         uses: hashicorp/setup-terraform@v1
         with:
