@@ -129,10 +129,10 @@ jobs:
         run: ls ${{ github.workspace }}
 
       - name: Terraform Init
-        env:
-          ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
-          ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}  
+        # env:
+        #   ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+        #   ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
+        #   ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}  
         if: true
         run: |
           terraform init \
