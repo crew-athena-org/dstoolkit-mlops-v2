@@ -163,12 +163,12 @@ jobs:
             terraform plan -out=tfplan
         working-directory: ${{ github.workspace }}/infra/terraform/${{ inputs.infra_workspace }}
 
-      # - name: Terraform Apply
-      #   env:
-      #     ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
-      #     ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
-      #     ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }} 
-      #   if: true
-      #   run: |
-      #       terraform apply -auto-approve -input=false tfplan
-      #   working-directory: ${{ github.workspace }}/infra/terraform/${{ inputs.infra_workspace }}
+      - name: Terraform Apply
+        env:
+          ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
+          ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }} 
+        if: true
+        run: |
+            terraform apply -auto-approve -input=false tfplan
+        working-directory: ${{ github.workspace }}/infra/terraform/${{ inputs.infra_workspace }}
